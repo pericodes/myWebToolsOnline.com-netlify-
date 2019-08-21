@@ -69,5 +69,34 @@
 	</div>
 	<div id="import-footer"></div>
 	<script type="text/javascript" src="./js/comun.js"></script>
+	<script type="text/javascript">
+		function reset() {
+			let text = document.getElementById('text-input').value = "";
+			count();
+		}
+		function count() {
+			let text = document.getElementById('text-input').value;
+			let characters = document.getElementById('characters');
+			let words = document.getElementById('words');
+			let paragraphs = document.getElementById('paragraphs');
+			let spaces = document.getElementById('spaces');
+			//console.log(characters);
+			//console.log(text.value);
+			characters.value = text.length;
+
+			/* words */
+			let regex = /\w+/gm;
+			words.value = ((text || '').match(regex) || []).length;
+
+			/* paragraphs */
+			regex = /(.+?\n\n|.+?$)/gm;
+			paragraphs.value = ((text || '').match(regex) || []).length;
+
+			/* spaces */
+			regex = / /gm;
+			spaces. value = ((text || '').match(regex) || []).length;
+		}
+		
+	</script>
 </body>
 </html>
