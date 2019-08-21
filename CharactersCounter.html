@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Generic Index</title>
+	<!-- metaTags -->
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta name="author" content="" />
+	<meta name="robots" content="index"/>
+
+	<meta name="description" content=""/>
+	<meta name="keywords" content=""/>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/base.css"/>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+</head>
+<body>
+	<div id="import-header"></div>
+	<div class="row d-flex justify-content-center">
+		<main class="col-sm-7 card">
+			<div class="card-body">
+				<div class="form-group">
+				  <label for="text-input">Text</label>
+				  <textarea class="form-control" id="text-input" onkeyup="count()" rows="5"></textarea>
+				</div>
+				<div class="form-group d-flex justify-content-center">
+				  <button type="button" class="btn btn-warning form-control" id="clearInput-button" onclick="clearInput()">Reset</button>
+				</div>
+				<section id="result" class="card-body">
+					<div class="form-group row">
+					    <label for="characters" class="col-sm-3 col-form-label">Characters</label>
+					    <div class="col-sm-3">
+					      <input type="text" readonly class="form-control" id="characters" value="0">
+					    </div>
+					    <label for="words" class="col-sm-3 col-form-label">Words</label>
+					    <div class="col-sm-3">
+					      <input type="text" readonly class="form-control" id="words" value="0">
+					    </div>
+				  	</div>
+				  	<div class="form-group row border-bottom pb-4">
+				  		<label for="paragraphs" class="col-sm-3 col-form-label">Paragraphs</label>
+					    <div class="col-sm-3">
+					      <input type="text" readonly class="form-control" id="paragraphs" value="0">
+					    </div>
+					    <label for="spaces" class="col-sm-3 col-form-label">Spaces</label>
+					    <div class="col-sm-3">
+					      <input type="text" readonly class="form-control" id="spaces" value="0">
+					    </div>
+				  	</div>
+				  	<div>
+				  		<div class="row">
+				  			<button type="button" class="btn btn-info col-12 dropdown-toggle mb-2" id="showStatistics-button" data-toggle="collapse" data-target="#statistics" aria-expanded="false" aria-controls="statistics">Show statistics</button>
+				  			<div class="collapse card card-body col-12" id="statistics">
+				  				<p>a = juña</p>
+				  			</div>
+				  		</div>
+				  		<div class="row">
+				  			
+				  			
+				  		</div>
+				  	</div>
+				</section>
+				</div>
+		</main>
+		<div id="import-aside"></div>
+	</div>
+	<div id="import-footer"></div>
+	<script type="text/javascript" src="./js/comun.js"></script>
+</body>
+</html>
