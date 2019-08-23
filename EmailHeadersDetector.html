@@ -48,9 +48,10 @@
 			analyze(); 
 		}
 		function analyze() {
-			let email = document.getElementById('text-input').value; 
+			let email = document.getElementById('text-input').value;
 
-			const headers = /(?<header>^[A-Z][a-zA-Z]*(?:-[A-Z][a-zA-Z]*)*: )(?:.*\n?){1,8}?(?=^[A-Z][a-zA-Z]*(?:-[A-Z][a-zA-Z]*)*: )/gm;
+
+			const headers = /^[A-Z][a-zA-Z]*(?:-[A-Z][a-zA-Z]*)*: /gm;
 
 			let m;
 			document.getElementById("results").innerHTML = "";
@@ -64,36 +65,51 @@
 			    if (m.index === headers.lastIndex) {
 			        headers.lastIndex++;
 			    }
-			    let content = m[0].split(m.groups["header"])[1].replace("<","&lt;");
+			    if(m[0] != "Content-Transfer-Encoding: "){ //Email text
+			    	//console.log(`/(?=^${m[0]})(?:.*\\n?)+?(?=^[A-Z][a-z]+(?:-[A-Z][a-z]+)*: )/gm`);
+					const header = new RegExp(`(?<=^${m[0]})(?:.*\n?)+?(?=^[A-Z][a-z]*(?:-[A-Z][a-z]*)*: )`,'gm');
 
-			    //console.log(m[0].split(m.groups["header"])[1]); 
-			    results += `
-			    <li class="result">
-					<ul class="list-group row flex-row">
-					  	<li class="list-group-item col-sm-2">
-					  		${m.groups["header"]}
-					  	</li>
-					  	<li class="list-group-item col-sm-10">
-					  		${content}
-					  	</li>
-					</ul>
-				</li>`;
-			    //console.log(m);
+				    let headerContent = header.exec(email);
 
-			    if (m.groups["header"] == "Received: ") {
-			    	//content
-			    	const ip_received = /(?:(?<=^|\s|\"|\>|\[|\(|:)(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?=\s|$|\"|\<|\]|\))|(?<=^|\s|\"|\>|\[|\(|:)(?:(?:[0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,7}:|(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,5}(?::[0-9a-fA-F]{1,4}){1,2}|(?:[0-9a-fA-F]{1,4}:){1,4}(?::[0-9a-fA-F]{1,4}){1,3}|(?:[0-9a-fA-F]{1,4}:){1,3}(?::[0-9a-fA-F]{1,4}){1,4}|(?:[0-9a-fA-F]{1,4}:){1,2}(?::[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:(?:(?::[0-9a-fA-F]{1,4}){1,6})|:(?:(?::[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(?::[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(?:ffff(?::0{1,4}){0,1}:){0,1}(?:(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])|(?:[0-9a-fA-F]{1,4}:){1,4}:(?:(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\s|$|\"|\<|\]|\)))/gm;
-			    	let aux = ip_received.exec(content)
-			    	//console.log(aux); 
-			    	if(aux != null){
-			    		ip = aux[0];
-			    		const domain_ip_received = /[a-zA-Z0-9-_.]{1,253}\.[a-zA-Z]{2,6}/gm;
-			    		aux = domain_ip_received.exec(content)
-			    		if(aux != null)
-			    			domain = aux[0];
+				    if(headerContent != null){
+				    	headerContent = headerContent[0].replace("<","&lt;")
+				    	//console.log("Antes: " + email)
+					    email = email.replace("" + m[0] + headerContent, "");
+					    //console.log("Luego: " + email + "")
+					    //let content = m[0].split(m.groups["header"])[1].replace("<","&lt;");
 
-			    	}
+					    //console.log(m[0].split(m.groups["header"])[1]); 
+					    results += `
+					    <li class="result">
+							<ul class="list-group row flex-row">
+							  	<li class="list-group-item col-sm-2">
+							  		${m[0]}
+							  	</li>
+							  	<li class="list-group-item col-sm-10">
+							  		${headerContent}
+							  	</li>
+							</ul>
+						</li>`;
+					    //console.log(m);
+
+					    if (m[0] == "Received: ") {
+					    	//content
+					    	const ip_received = /(?:(?<=^|\s|\"|\>|\[|\(|:)(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?=\s|$|\"|\<|\]|\))|(?<=^|\s|\"|\>|\[|\(|:)(?:(?:[0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,7}:|(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,5}(?::[0-9a-fA-F]{1,4}){1,2}|(?:[0-9a-fA-F]{1,4}:){1,4}(?::[0-9a-fA-F]{1,4}){1,3}|(?:[0-9a-fA-F]{1,4}:){1,3}(?::[0-9a-fA-F]{1,4}){1,4}|(?:[0-9a-fA-F]{1,4}:){1,2}(?::[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:(?:(?::[0-9a-fA-F]{1,4}){1,6})|:(?:(?::[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(?::[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(?:ffff(?::0{1,4}){0,1}:){0,1}(?:(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])|(?:[0-9a-fA-F]{1,4}:){1,4}:(?:(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\s|$|\"|\<|\]|\)))/gm;
+					    	let aux = ip_received.exec(headerContent)
+					    	//console.log(aux); 
+					    	if(aux != null){
+					    		ip = aux[0];
+					    		const domain_ip_received = /[a-zA-Z0-9-_.]{1,253}\.[a-zA-Z]{2,6}/gm;
+					    		aux = domain_ip_received.exec(headerContent)
+					    		if(aux != null)
+					    			domain = aux[0];
+
+					    	}
+					    }
+				    }
+				    
 			    }
+
 
 			}
 			
