@@ -18,7 +18,10 @@
     <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
     <style type="text/css">
     	.result{
-    		list-style:none
+    		list-style:none;
+    	}
+    	.table-layout-fixed {
+    		table-layout: fixed;
     	}
     </style>
 </head>
@@ -79,18 +82,24 @@
 									<div class="card-body"><ul class="list-group">
 										<h5 class="card-title">${name}: </h5>
 									</div>
+									<div>
+									<table class="table table-bordered table-hover table-layout-fixed">
+									  <thead class="thead-light">
+									    <tr>
+									      <th scope="col">Value</th>
+									    </tr>
+									  </thead>
+									  <tbody>
 
 										`;
 
 				for (let item of set){
 					 result += `
-					<ul class="list-group">
-						<li class="list-group-item">
-				    		${item}
-				    	</li>
-				    </ul>`;
+					 <tr>
+						<td class="">${item.replace("<","&lt;")}</td>
+					</tr>`;
 				}
-				result +='</div>'
+				result +='</tbody></table></div>'
 				document.getElementById("results").insertAdjacentHTML("beforeend", result);
 			}
 
@@ -100,6 +109,7 @@
 			let text = document.getElementById('text-input').value.replace(/(?<!=)=\n(?!^[A-Z][a-zA-Z]*(?:-[A-Z][a-zA-Z]*)*: )/gm, "");
 			document.getElementById('text-input').value = text;
 			document.getElementById("results").innerHTML = "";
+
 
 			var ipsV4 	= new Set();
 			var ipsV6 	= new Set();
@@ -204,7 +214,14 @@
 				let results = `
 				<div class="card-body">
 					<h5 class="card-title">Headers: </h5>
-					<ul class="list-group">
+					<table class="table table-bordered table-hover">
+					  <thead class="thead-light">
+					    <tr>
+					      <th scope="col">Header</th>
+					      <th scope="col">Value</th>
+					    </tr>
+					  </thead>
+					  <tbody>
 				`;
 				while ((m = headers.exec(text)) !== null) {
 				    // This is necessary to avoid infinite loops with zero-width matches
@@ -217,21 +234,14 @@
 
 					    let headerContent = header.exec(text);
 					    if(headerContent != null){
-					    	headerContent = headerContent[0].replace("<","&lt;")
+					    	headerContent = headerContent[0].replace("<","&lt;");
 						    text = text.replace("" + m[0] + headerContent, "");
 
 						    results += `
-						    <li class="result">
-								<ul class="list-group row flex-row">
-								  	<li class="list-group-item col-sm-2">
-								  		${m[0]}
-								  	</li>
-								  	<li class="list-group-item col-sm-10">
-								  		${headerContent}
-								  	</li>
-								</ul>
-							</li>`;
-
+						    <tr>
+						      	<td>${m[0]}</td>
+						      	<td>${headerContent}</td>
+						    </tr>`;
 						    if (m[0] == "Received: ") {
 						    	//content
 						    	const ip_received = /(?:(?<=^|\s|\"|\>|\[|\(|:)(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?=\s|$|\"|\<|\]|\))|(?<=^|\s|\"|\>|\[|\(|:)(?:(?:[0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,7}:|(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,5}(?::[0-9a-fA-F]{1,4}){1,2}|(?:[0-9a-fA-F]{1,4}:){1,4}(?::[0-9a-fA-F]{1,4}){1,3}|(?:[0-9a-fA-F]{1,4}:){1,3}(?::[0-9a-fA-F]{1,4}){1,4}|(?:[0-9a-fA-F]{1,4}:){1,2}(?::[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:(?:(?::[0-9a-fA-F]{1,4}){1,6})|:(?:(?::[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(?::[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(?:ffff(?::0{1,4}){0,1}:){0,1}(?:(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])|(?:[0-9a-fA-F]{1,4}:){1,4}:(?:(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\s|$|\"|\<|\]|\)))/gm;
@@ -248,7 +258,7 @@
 				    }
 				}
 				
-				results += `</ul></div> </div> </div>`;
+				results += `  </tbody></table></div> </div> </div>`;
 
 				received = `<div class="card card-body" >
 							<div class="d-flex justify-content-center">
@@ -274,7 +284,6 @@
 
 
 				document.getElementById("results").insertAdjacentHTML("afterbegin", received + results);; 
-				//document.getElementById("results").insertAdjacentHTML("beforeend", results);; 
 			}
 
 
