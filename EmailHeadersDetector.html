@@ -98,9 +98,8 @@
 		function analyze() {
 			//let text = document.getElementById('text-input').value.replace(/\n/g, "");
 			let text = document.getElementById('text-input').value.replace(/(?<!=)=\n(?!^[A-Z][a-zA-Z]*(?:-[A-Z][a-zA-Z]*)*: )/gm, "");
-			//let text = document.getElementById('text-input').value;
-
 			document.getElementById('text-input').value = text;
+			document.getElementById("results").innerHTML = "";
 
 			var ipsV4 	= new Set();
 			var ipsV6 	= new Set();
@@ -109,7 +108,6 @@
 			var links 	= new Set();
 
 			let m;
-			document.getElementById("results").innerHTML = "";
 
 			/* Emails */
 			email = /[a-zA-Z0-9-_.]{1,64}@(?<domain>[a-zA-z][a-zA-Z0-9-_.]{1,252}\.(?<tdl>[a-zA-Z]{2,6})\.?)/gm;
@@ -117,12 +115,14 @@
 			m = null;
 			m = email.exec(text);
 			if(m != null){
+				if(validDomain(m[0]))
+					emails.add(m[0]);
 				while ((m = email.exec(text)) !== null) {
 				    if(validDomain(m[0]))
 						emails.add(m[0]);
 				}
    			}
-   			if(emails != null)
+   			if(emails.size != 0)
 				addNewSection("Emails", "emails", emails);
 
 
@@ -132,6 +132,8 @@
 			m = null;
 			m = link.exec(text);
 			if(m != null){
+				if(validDomain(m[0]))
+					links.add(m[0]);
 				while ((m = link.exec(text)) !== null) {
 				    if(validDomain(m[0]))
 						links.add(m[0]);
@@ -146,7 +148,7 @@
 				    	ipsV6.add(m.groups["Ipv6"]);
 				}
    			}
-   			if(links != null)
+   			if(links.size != 0)
 				addNewSection("Links", "links", links);
 
 			/* Domains */
@@ -155,12 +157,14 @@
 			m = null;
 			m = domain.exec(text);
 			if(m != null){
+				if(validDomain(m[0]))
+					domains.add(m[0]);
 				while ((m = domain.exec(text)) !== null) {
 				    if(validDomain(m[0]))
 						domains.add(m[0]);
 				}
    			}
-   			if(domains != null)
+   			if(domains.size != 0)
 				addNewSection("Domains", "domains", domains); 
 
 			/* IpsV4 */
@@ -169,11 +173,12 @@
 			m = null;
 			m = ipV4.exec(text);
 			if(m != null){
+				ipsV4.add(m[0]);
 				while ((m = ipV4.exec(text)) !== null) {
 					ipsV4.add(m[0]);
 				}
    			}
-   			if(ipsV4 != null)
+   			if(ipsV4.size != 0)
 				addNewSection("Ips V4", "ipsV4", ipsV4); 
 
 			/* IpsV6 */
@@ -182,11 +187,12 @@
 			m = null;
 			m = ipV6.exec(text);
 			if(m != null){
+				ipsV6.add(m[0]);
 				while ((m = ipV6.exec(text)) !== null) {
 					ipsV6.add(m[0]);
 				}
    			}
-   			if(ipsV6 != null)
+   			if(ipsV6.size != 0)
 				addNewSection("Ips V6", "ipsV6", ipsV6); 
 
 			/* Headers */
