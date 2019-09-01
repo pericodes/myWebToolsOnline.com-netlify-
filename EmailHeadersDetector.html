@@ -224,7 +224,7 @@
 
 				    if(m[i] != "Content-Transfer-Encoding: "){ //text text
 
-						const header = new RegExp(`(?<=^${m[i]})(?:.*\n?)+?(?=^[A-Z][a-z]*(?:-[A-Z][a-z]*)*: )`,'gm');
+						const header = new RegExp(`(?<=^${m[i]})(?:.*\n?)+?(?=^[A-Z][a-zA-Z]*(?:-[A-Z][a-zA-Z]*)*: )`,'gm');
 
 						console.log(m[i])
 					    let headerContent = header.exec(text);
