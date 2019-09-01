@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>text headers detector</title>
+	<title>Text headers detector</title>
 	<!-- metaTags -->
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -122,14 +122,12 @@
 			/* Emails */
 			email = /[a-zA-Z0-9-_.]{1,64}@(?<domain>[a-zA-z][a-zA-Z0-9-_.]{1,252}\.(?<tdl>[a-zA-Z]{2,6})\.?)/gm;
 
-			m = null;
-			m = email.exec(text);
+			m = text.match(email);
+			console.log("Emails")
 			if(m != null){
-				if(validDomain(m[0]))
-					emails.add(m[0]);
-				while ((m = email.exec(text)) !== null) {
-				    if(validDomain(m[0]))
-						emails.add(m[0]);
+				for (var i = 0; i < m.length; i++) {
+				    if(validDomain(m[i]))
+						emails.add(m[i]);
 				}
    			}
    			if(emails.size != 0)
@@ -140,14 +138,14 @@
 			link = /(?<=^|\s|\"|\>|\[|\(|:|\<)(?:(?:https?|ftp|file):\/\/)?(?:(?<domain>[a-zA-Z0-9-_.]{1,253}\.[a-zA-Z]{2,6}\.?)|(?<Ipv4>(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|(?<Ipv6>(?:(?:[0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,7}:|(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,5}(?::[0-9a-fA-F]{1,4}){1,2}|(?:[0-9a-fA-F]{1,4}:){1,4}(?::[0-9a-fA-F]{1,4}){1,3}|(?:[0-9a-fA-F]{1,4}:){1,3}(?::[0-9a-fA-F]{1,4}){1,4}|(?:[0-9a-fA-F]{1,4}:){1,2}(?::[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:(?:(?::[0-9a-fA-F]{1,4}){1,6})|:(?:(?::[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(?::[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(?:ffff(?::0{1,4}){0,1}:){0,1}(?:(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])|(?:[0-9a-fA-F]{1,4}:){1,4}:(?:(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9]))))(?:\:\d{2,5})?\/(?:[\~\$\-\_\.\+\!\*\'\(\)\,\;\/\?\:\@\=\&\%a-zA-z\d\n]*)?(?=\s|$|\"|\<|\]|\)\>)?/gm;
 
 			m = null;
-			m = link.exec(text);
+			m = text.match(link);
+			console.log(m);
+			console.log("Links")
 			if(m != null){
-				if(validDomain(m[0]))
-					links.add(m[0]);
-				while ((m = link.exec(text)) !== null) {
-				    if(validDomain(m[0]))
-						links.add(m[0]);
-					if(m.groups["domain"] != null)
+				for (var i = 0; i < m.length; i++) {
+				    if(validDomain(m[i]))
+						links.add(m[i]);
+					/*if(m.groups["domain"] != null)
 				    	if(validDomain(m.groups["domain"]))
 				    		domains.add(m.groups["domain"]);
 
@@ -155,7 +153,7 @@
 				    	ipsV4.add(m.groups["Ipv4"]);
 
 				    if(m.groups["Ipv6"] != null)
-				    	ipsV6.add(m.groups["Ipv6"]);
+				    	ipsV6.add(m.groups["Ipv6"]);*/
 				}
    			}
    			if(links.size != 0)
@@ -165,13 +163,12 @@
 			domain = /(?<=^|\s|\"|\>|\[|\(|:|\<)[a-zA-Z0-9-_.]{1,253}\.[a-zA-Z]{2,6}\.?(?=\s|$|\"|\<|\]|\)\>)?/gm;
 
 			m = null;
-			m = domain.exec(text);
+			m = text.match(domain);
+			console.log("domains")
 			if(m != null){
-				if(validDomain(m[0]))
-					domains.add(m[0]);
-				while ((m = domain.exec(text)) !== null) {
-				    if(validDomain(m[0]))
-						domains.add(m[0]);
+				for (var i = 0; i < m.length; i++) {
+				    if(validDomain(m[i]))
+						domains.add(m[i]);
 				}
    			}
    			if(domains.size != 0)
@@ -181,11 +178,10 @@
 			ipV4 = /(?<=^|\s|\"|\>|\[|\(|:|\<)(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?=\s|$|\"|\<|\]|\)\>)?/gm;
 
 			m = null;
-			m = ipV4.exec(text);
+			m = text.match(ipV4);
 			if(m != null){
-				ipsV4.add(m[0]);
-				while ((m = ipV4.exec(text)) !== null) {
-					ipsV4.add(m[0]);
+				for (var i = 0; i < m.length; i++) {
+					ipsV4.add(m[i]);
 				}
    			}
    			if(ipsV4.size != 0)
@@ -194,12 +190,10 @@
 			/* IpsV6 */
 			ipV6 = /(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/gm;
 
-			m = null;
-			m = ipV6.exec(text);
+			m = text.match(ipV6);
 			if(m != null){
-				ipsV6.add(m[0]);
-				while ((m = ipV6.exec(text)) !== null) {
-					ipsV6.add(m[0]);
+				for (var i = 0; i < m.length; i++) {
+					ipsV6.add(m[i]);
 				}
    			}
    			if(ipsV6.size != 0)
@@ -207,7 +201,9 @@
 
 			/* Headers */
 			const headers = /^[A-Z][a-zA-Z]*(?:-[A-Z][a-zA-Z]*)*: /gm;
-			m = headers.exec(text)
+			m = text.match(headers);
+			console.log(m);
+			console.log("header")
 			if(m != null){
 				let ip = "Ip doesn't found."; 
 				let domain = "domain doesn't found."
@@ -223,26 +219,24 @@
 					  </thead>
 					  <tbody>
 				`;
-				while ((m = headers.exec(text)) !== null) {
-				    // This is necessary to avoid infinite loops with zero-width matches
-				    if (m.index === headers.lastIndex) {
-				        headers.lastIndex++;
-				    }
 
-				    if(m[0] != "Content-Transfer-Encoding: "){ //text text
-						const header = new RegExp(`(?<=^${m[0]})(?:.*\n?)+?(?=^[A-Z][a-z]*(?:-[A-Z][a-z]*)*: )`,'gm');
+				for(let i = 0; i < m.length; i++){
 
+				    if(m[i] != "Content-Transfer-Encoding: "){ //text text
+
+						const header = new RegExp(`(?<=^${m[i]})(?:.*\n?)+?(?=^[A-Z][a-z]*(?:-[A-Z][a-z]*)*: )`,'gm');
+
+						console.log(m[i])
 					    let headerContent = header.exec(text);
-					    if(headerContent != null){
+					    if(headerContent != null ){
 					    	headerContent = headerContent[0].replace("<","&lt;");
-						    text = text.replace("" + m[0] + headerContent, "");
-
+						    text = text.replace("" + m[i] + headerContent, "");
 						    results += `
 						    <tr>
-						      	<td>${m[0]}</td>
+						      	<td>${m[i]}</td>
 						      	<td>${headerContent}</td>
 						    </tr>`;
-						    if (m[0] == "Received: ") {
+						    if (m[i] == "Received: ") {
 						    	//content
 						    	const ip_received = /(?:(?<=^|\s|\"|\>|\[|\(|:)(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?=\s|$|\"|\<|\]|\))|(?<=^|\s|\"|\>|\[|\(|:)(?:(?:[0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,7}:|(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,5}(?::[0-9a-fA-F]{1,4}){1,2}|(?:[0-9a-fA-F]{1,4}:){1,4}(?::[0-9a-fA-F]{1,4}){1,3}|(?:[0-9a-fA-F]{1,4}:){1,3}(?::[0-9a-fA-F]{1,4}){1,4}|(?:[0-9a-fA-F]{1,4}:){1,2}(?::[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:(?:(?::[0-9a-fA-F]{1,4}){1,6})|:(?:(?::[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(?::[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(?:ffff(?::0{1,4}){0,1}:){0,1}(?:(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])|(?:[0-9a-fA-F]{1,4}:){1,4}:(?:(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(?:25[0-5]|(?:2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\s|$|\"|\<|\]|\)))/gm;
 						    	let aux = ip_received.exec(headerContent)
