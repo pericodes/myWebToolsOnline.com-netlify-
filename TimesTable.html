@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Generic Index</title>
+	<!-- metaTags -->
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta name="author" content="" />
+	<meta name="robots" content="index"/>
+
+	<meta name="description" content=""/>
+	<meta name="keywords" content=""/>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/base.css"/>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+</head>
+<body>
+	<div id="import-header"></div>
+	<div class="row d-flex justify-content-center">
+		<main class="col-sm-7 card">
+			<h1>Select the times tables that you want to practice: </h1>
+			<form id="timesTables" class="d-flex flex-row justify-content-between" style="font-size: xx-large;">
+				<div class="form-check form-check-inline">
+				  <input class="form-check-input" name="timesTables" type="checkbox" id="inlineCheckbox1" value="timeTable1" checked="">
+				  <label class="form-check-label" for="inlineCheckbox1">1</label>
+				</div>
+				<div class="form-check form-check-inline">
+				  <input class="form-check-input" name="timesTables" type="checkbox" id="inlineCheckbox2" value="timeTable2" checked="">
+				  <label class="form-check-label" for="inlineCheckbox2">2</label>
+				</div>
+				<div class="form-check form-check-inline">
+				  <input class="form-check-input" name="timesTables" type="checkbox" id="inlineCheckbox3" value="timeTable3" checked="">
+				  <label class="form-check-label" for="inlineCheckbox3">3</label>
+				</div>
+				<div class="form-check form-check-inline">
+				  <input class="form-check-input" name="timesTables" type="checkbox" id="inlineCheckbox4" value="timeTable4" checked="">
+				  <label class="form-check-label" for="inlineCheckbox4">4</label>
+				</div>
+				<div class="form-check form-check-inline">
+				  <input class="form-check-input" name="timesTables" type="checkbox" id="inlineCheckbox5" value="timeTable5" checked="">
+				  <label class="form-check-label" for="inlineCheckbox5">5</label>
+				</div>
+				<div class="form-check form-check-inline">
+				  <input class="form-check-input" name="timesTables" type="checkbox" id="inlineCheckbox6" value="timeTable6" checked="">
+				  <label class="form-check-label" for="inlineCheckbox6">6</label>
+				</div>
+				<div class="form-check form-check-inline">
+				  <input class="form-check-input" name="timesTables" type="checkbox" id="inlineCheckbox7" value="timeTable7" checked="">
+				  <label class="form-check-label" for="inlineCheckbox7">7</label>
+				</div>
+				<div class="form-check form-check-inline">
+				  <input class="form-check-input" name="timesTables" type="checkbox" id="inlineCheckbox8" value="timeTable8" checked="">
+				  <label class="form-check-label" for="inlineCheckbox8">8</label>
+				</div>
+				<div class="form-check form-check-inline">
+				  <input class="form-check-input" name="timesTables" type="checkbox" id="inlineCheckbox9" value="timeTable9" checked="">
+				  <label class="form-check-label" for="inlineCheckbox9">9</label>
+				</div>
+				<div class="form-check form-check-inline">
+				  <input class="form-check-input" name="timesTables" type="checkbox" id="inlineCheckbox10" value="timeTable10" checked="">
+				  <label class="form-check-label" for="inlineCheckbox10">10</label>
+				</div>
+			</form>
+			<div class="row m-4" style="font-size: 5em; font-size-adjust: 0.58;">
+				<p id="text" class="col-sm-9 text-center"></p>
+				<input class="col-sm-3" type="number" id="result">
+			</div>
+			<div class="alert text-center" id="messageResult" style="display: none; font-size: 3em;" role="alert">
+			</div>
+			<div class="row">
+				<button type="button" class="btn btn-success col-sm-12" onclick="correct()" style="font-size: 3em; font-size-adjust: 0.58;">Correct !</button>
+			</div>
+		</main>
+		<div id="import-aside"></div>
+	</div>
+	<div id="import-footer"></div>
+	<script type="text/javascript" src="./js/comun.js"></script>
+	<script type="text/javascript">
+		Node.prototype.getElementsByAttributeValue = function(attribute, value){
+		    var dom = this.all || this.getElementsByTagName("*");
+		    var match = new Array();
+		    for (var i in dom) {
+		        if ((typeof dom[i]) === "object"){
+		            if (dom[i].getAttribute(attribute) === value){
+		                match.push(dom[i]);
+		            }
+		        }
+		    }
+		    return match;
+		};
+		newCount();
+		var n1;
+		var n2; 
+		function correct() {
+			let result = document.getElementById('result').value;
+			let messageResult = document.getElementById("messageResult");
+			messageResult.classList.remove("alert-success")
+			messageResult.classList.remove("alert-danger")
+			if(n1 * n2 == result){
+				messageResult.innerHTML = "Very good!";
+				messageResult.classList.add("alert-success")
+			}else{
+				messageResult.innerHTML = "Error! " + n1 + " x " + n2 + " = " + n1 * n2;
+				messageResult.classList.add("alert-danger")
+			}
+			messageResult.style.display = "block";
+			document.getElementById('result').value = "";
+			document.getElementById('result').focus();
+
+			newCount();
+		}
+		function newCount() {
+			let timesTables = document.getElementsByAttributeValue("name",'timesTables');
+			let numbers = new Array(); 
+			for (let i = 0; i < timesTables.length; i++) {
+			  if (timesTables[i].checked) {
+			    numbers.push(i);
+			  }
+			}
+			n1 = (numbers[Math.floor(Math.random() * numbers.length)] + 1 );
+			n2 = (Math.floor(Math.random() * 10) + 1 ); 
+			document.getElementById('text').innerHTML = n1 + " x " + n2 + " = ";
+		}
+
+
+	</script>
+</body>
+</html>
