@@ -22,7 +22,7 @@
 	<div class="row d-flex justify-content-center">
 		<main class="col-sm-7 card">
 			<h1>Select the times tables that you want to practice: </h1>
-			<form id="timesTables" class="d-flex flex-row justify-content-between" style="font-size: xx-large;">
+			<div id="timesTables" class="d-flex flex-row justify-content-between" style="font-size: xx-large;">
 				<div class="form-check form-check-inline">
 				  <input class="form-check-input" name="timesTables" type="checkbox" id="inlineCheckbox1" value="timeTable1" checked="">
 				  <label class="form-check-label" for="inlineCheckbox1">1</label>
@@ -43,6 +43,8 @@
 				  <input class="form-check-input" name="timesTables" type="checkbox" id="inlineCheckbox5" value="timeTable5" checked="">
 				  <label class="form-check-label" for="inlineCheckbox5">5</label>
 				</div>
+			</div>
+			<div id="timesTables" class="d-flex flex-row justify-content-between" style="font-size: xx-large;">
 				<div class="form-check form-check-inline">
 				  <input class="form-check-input" name="timesTables" type="checkbox" id="inlineCheckbox6" value="timeTable6" checked="">
 				  <label class="form-check-label" for="inlineCheckbox6">6</label>
@@ -63,7 +65,7 @@
 				  <input class="form-check-input" name="timesTables" type="checkbox" id="inlineCheckbox10" value="timeTable10" checked="">
 				  <label class="form-check-label" for="inlineCheckbox10">10</label>
 				</div>
-			</form>
+			</div>
 			<div class="row m-4" style="font-size: 5em; font-size-adjust: 0.58;">
 				<p id="text" class="col-sm-9 text-center"></p>
 				<input class="col-sm-3" type="number" id="result">
@@ -91,6 +93,15 @@
 		    }
 		    return match;
 		};
+		document.getElementById('result').addEventListener("keyup", function(event) {
+		  // Number 13 is the "Enter" key on the keyboard
+		  if (event.keyCode === 13) {
+		    // Cancel the default action, if needed
+		    event.preventDefault();
+		    correct();
+		  }
+		});
+
 		newCount();
 		var n1;
 		var n2; 
