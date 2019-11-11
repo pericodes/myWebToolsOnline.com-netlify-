@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Generic Index</title>
+	<!-- metaTags -->
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta name="author" content="" />
+	<meta name="robots" content="index"/>
+
+	<meta name="description" content=""/>
+	<meta name="keywords" content=""/>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/base.css"/>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+</head>
+<body>
+	<div id="import-header"></div>
+	<div class="row d-flex justify-content-center">
+		<main class="col-sm-7 card">
+			<div class="d-flex justify-content-center">
+				<button class="btn btn-warning dropdown-toggle" type="button" data-toggle="collapse" data-target=".AddWords" aria-expanded="false" aria-controls="AddWords wordInsert" style="font-size: xx-large;">Add Words</button>
+			</div>
+			<section class="collapse border-bottom AddWords" id="AddWords" style="font-size: xx-large;">
+				<div class="row card-body">
+					<div class="form-group col-sm-6">
+					    <label for="wordsToLearn">Words A</label>
+					    <textarea class="form-control" id="wordsToLearn" rows="3" placeholder="pink
+yellow
+blue"></textarea>
+					</div>
+					<div class="form-group col-sm-6">
+					    <label for="wordsTranslated">Words B</label>
+					    <textarea class="form-control" id="wordsTranslated" rows="3" placeholder="rosa
+amarillo
+azul"></textarea>
+					</div>
+				</div>
+				<div class="row card-body">
+					<div class="form-group col-sm-5">
+						<input type="text" class="form-control" id="wordA"  placeholder="blue" required="">
+					</div>
+					<div class="form-group col-sm-5">
+						<input type="text" class="form-control" id="wordB"  placeholder="azul" required="">
+					</div>
+					<div class="col-sm-2 d-flex justify-content-center">
+						<button type="button" class="btn btn-success" onclick="addWord()">Add word</button>
+					</div>
+				</div>
+				<div class="alert alert-danger" id="wordsAddError" style="display: none;" role="alert">
+				  The number of words must be the same.
+				</div>
+				<div class="alert alert-success" id="wordsAddSuccess" style="display: none;" role="alert">
+				  Words added ! :)
+				</div>
+				<div class="d-flex justify-content-center">
+					<button type="button" class="btn btn-success m-3" onclick="addWords()" style="font-size: xx-large;">Done !</button>
+					<button type="button" class="btn btn-danger m-3" onclick="removeWords()" style="font-size: xx-large;">Remove the words</button>
+				</div>
+			</section>
+			<section class="card-body collapse AddWords show" id="wordInsert" >
+				<section id="wordInsert-correct" class="text-center" style="display: none; font-size: 3em;">
+					<div class="form-group">
+					    <label id="wordMessage" for="wordInserted"></label>
+					    <!--<textarea class="form-control" id="wordInserted" rows="3"></textarea>-->
+					    <input type="email" class="form-control" id="wordInserted" aria-describedby="emailHelp" placeholder="Enter here the reponse" style="font-size: xx-large;">
+					</div>
+					<div class="alert text-center" id="messageResult" style="display: none;" role="alert">
+					</div>
+					<div class="d-flex justify-content-center">
+						<button type="button" id="correct-button" class="btn btn-success mb-2" onclick="correct()" style="font-size: xx-large;">Correct !</button>
+					</div>
+				</section>
+				<div class="alert alert-danger" id="wordInsertError" style="font-size: xx-large;" role="alert"></div>
+			</section>
+			<div class="d-flex justify-content-center">
+				<button class="btn btn-info dropdown-toggle" type="button" data-toggle="collapse" data-target="#Stats" aria-expanded="false" aria-controls="Stats" style="font-size: xx-large;">Stats</button>
+			</div>
+			<section class="collapse border-bottom Stats" id="Stats" style="font-size: large;">
+				<section class="row justify-content-around mt-3">
+					<table class="table col-5" id="WordAToB">
+					  <thead>
+					    <tr>
+					      <th scope="col">Word</th>
+					      <th scope="col">Rights</th>
+					      <th scope="col">Fails</th>
+					      <th scope="col">Attempts</th>
+					    </tr>
+					  </thead>
+					</table>
+					<table class="table col-5" id="WordAToB">
+					  <thead>
+					    <tr>
+					      <th scope="col">Word</th>
+					      <th scope="col">Rights</th>
+					      <th scope="col">Fails</th>
+					      <th scope="col">Attempts</th>
+					    </tr>
+					  </thead>
+					</table>
+				</section>
+			</section>
+			<!--
+			<div class="row ">
+				<div class="col-sm-6 d-flex justify-content-center align-items-center"><a href="./LearnWords/AddWords.html"><button type="button" class="btn btn-success">Add new Words</button></a></div>
+				<div class="col-sm-6 d-flex justify-content-center align-items-center"><a href="./LearnWords/LearnWords.html"><button type="button" class="btn btn-success">Learn the words</button></a></div>
+			</div>
+		-->
+		</main>
+		<div id="import-aside"></div>
+	</div>
+	<div id="import-footer"></div>
+	<script type="text/javascript" src="./js/comun.js"></script>
+	<script type="text/javascript">
+		String.prototype.replaceAll = function(search, replacement) {
+		    var target = this;
+		    return target.replace(new RegExp(search, 'gm'), replacement);
+		};
+		$.noConflict();
+		var word;
+		var wordsToLearnAux = null;
+		var wordsTranslatedAux = null;
+		var direction = null; // 0 = a ==> b, 1 = b ==> 
+		let wordsAtoBRights = null;
+		let wordsBtoARights = null;
+		let wordsAtoBFails = null;
+		let wordsBtoAFails = null;
+
+		loadsWords();
+		//thereAreWords();
+		function normalize(input) {
+			return input.toLowerCase().trim()
+		}
+		function addWord() {
+			let wordsToLearn = document.getElementById('wordsToLearn');
+			let wordsTranslated = document.getElementById('wordsTranslated');
+			let wordA = document.getElementById('wordA');
+			let wordB = document.getElementById('wordB');
+
+			if(wordA.value.length > 0 && wordB.value.length > 0){
+				wordsToLearn.value = (wordsToLearn.value + "\n" + wordA.value).replaceAll("^\n^","");
+				wordsTranslated.value = (wordsTranslated.value + "\n" + wordB.value).replaceAll("^\n^","");
+				document.getElementById('wordsAddError').style.display = "none";
+				wordA.value = ""; 
+				wordA.focus();
+				wordB.value = ""; 
+			}else{
+				document.getElementById("wordsAddError").innerHTML = "You have to add the words in pairs";	
+				document.getElementById("wordsAddError").style.display = "block";
+				if (wordA.value.length == 0) {
+					wordA.focus();
+				}else{
+					wordB.focus();
+				}
+			}
+			
+		}
+		function addWords() {
+			document.getElementById("wordsAddError").style.display = "none";
+			document.getElementById("wordsAddSuccess").style.display = "none";
+			if (document.getElementById('wordsToLearn').value.split("\n").length != document.getElementById('wordsTranslated').value.split("\n").length) {
+				document.getElementById("wordsAddError").style.display = "block";
+				thereAreWords();
+			} else {
+				document.getElementById("wordsAddSuccess").style.display = "block";
+				let wordsToLearn = document.getElementById('wordsToLearn').value.replaceAll("\n","{**}");
+				let wordsTranslated = document.getElementById('wordsTranslated').value.replaceAll("\n","{**}");
+				//console.log(wordsToLearn);
+				//console.log(wordsTranslated);
+				localStorage.setItem('wordsToLearn', wordsToLearn);
+				localStorage.setItem('wordsTranslated', wordsTranslated);
+				loadsWords();
+				generateNewWord()
+			}
+			//thereAreWords();
+			
+		}
+		function loadsWords() {
+			wordsToLearnAux = null; 
+			wordsTranslatedAux = null; 
+			if(localStorage.getItem("wordsToLearn") != null && localStorage.getItem("wordsTranslated") != null){
+
+				wordsToLearnAux = localStorage.getItem("wordsToLearn").split("{**}"); 
+				wordsTranslatedAux = localStorage.getItem("wordsTranslated").split("{**}"); 
+
+				//console.log(localStorage.getItem("wordsToLearn").split("{**}"));
+				//console.log(localStorage.getItem("wordsTranslated").split("{**}"));
+
+				if (wordsToLearnAux.length == wordsTranslatedAux.length) {
+					let wordsToLearn = localStorage.getItem("wordsToLearn").replaceAll(/\{\*\*\}/,"\n"); 
+					let wordsTranslated = localStorage.getItem("wordsTranslated").replaceAll(/\{\*\*\}/,"\n"); 
+					//console.log(wordsToLearn);
+					//console.log(wordsTranslated);
+
+					document.getElementById('wordsToLearn').value = wordsToLearn;
+					document.getElementById('wordsTranslated').value = wordsTranslated;
+					wordsAtoBRights = new Array();
+					wordsBtoARights = new Array();
+					wordsAtoBFails = new Array();
+					wordsBtoAFails = new Array();
+					for (let i = 0; i < wordsTranslatedAux.length; i++) {
+						wordsAtoBRights[i] = 0;
+						wordsBtoARights[i] = 0;
+						wordsAtoBFails[i] = 0;
+						wordsBtoAFails[i] = 0;
+					}
+				}
+			}
+			thereAreWords();
+		}
+		function removeWords() {
+			document.getElementById('wordsToLearn').value = "";
+			document.getElementById('wordsTranslated').value = "";
+			localStorage.removeItem('wordsToLearn');
+			localStorage.removeItem('wordsTranslated');
+			loadsWords();
+			//thereAreWords();
+		}
+		function thereAreWords() {
+			document.getElementById('wordInsert-correct').style.display = "none";
+			if (localStorage.getItem("wordsToLearn") == null || localStorage.getItem("wordsTranslated") == null) {
+				document.getElementById("wordInsertError").innerHTML = "You haven't added any words yet.";	
+				document.getElementById("wordInsertError").style.display = "block";
+				//document.getElementById('wordInserted').style.display = "none";
+				//document.getElementById('correct-button').style.display = "none";
+			} else {
+				document.getElementById("wordInsert-correct").style.display = "block";
+				document.getElementById('wordInsertError').style.display = "none";
+				generateNewWord(); 
+			}
+		}
+		document.getElementById('wordInserted').addEventListener("keyup", function(event) {
+		  // Number 13 is the "Enter" key on the keyboard
+		  if (event.keyCode === 13) {
+		    // Cancel the default action, if needed
+		    event.preventDefault();
+		    correct();
+		  }
+		});
+
+		function generateStats() {
+			let stats = "";
+
+			stats += `<section class="row justify-content-around mt-3">
+					<table class="table col-5 table-hover" id="WordAToB">
+					  <thead class="thead-light">
+					    <tr>
+					      <th scope="col">Word</th>
+					      <th scope="col">Rights</th>
+					      <th scope="col">Fails</th>
+					      <th scope="col">Attempts</th>
+					    </tr>
+					  </thead>
+					  <tbody>`
+
+			let rights = 0; 
+			let fails = 0;
+			for (var i = 0; i < wordsToLearnAux.length; i++) {
+				stats += `
+							<tr>
+								<th>${wordsToLearnAux[i]} ==> ${wordsTranslatedAux[i]}</th>
+								<th>${wordsAtoBRights[i]}</th>
+								<th>${wordsAtoBFails[i]}</th>
+								<th>${wordsAtoBRights[i] + wordsAtoBFails[i]}</th>
+							</tr>
+				`
+				rights += wordsAtoBRights[i];
+				fails += wordsAtoBFails[i];
+			}
+
+    		stats +=`
+    				  </tbody>
+    				  <tfoot>
+    				  		<tr>
+								<th>Total</th>
+								<th>${rights}</th>
+								<th>${fails}</th>
+								<th>${rights + fails}</th>
+							</tr>
+    				  </tfoot>
+					</table>
+					<table class="table col-5 table-hover" id="WordAToB">
+					  <thead class="thead-light">
+					    <tr>
+					      <th scope="col">Word</th>
+					      <th scope="col">Rights</th>
+					      <th scope="col">Fails</th>
+					      <th scope="col">Attempts</th>
+					    </tr>
+					  </thead>
+					  <tbody>`;
+					  rights = 0; 
+					  fails = 0;
+					  for (var i = 0; i < wordsToLearnAux.length; i++) {
+						stats += `
+									<tr>
+										<th>${wordsTranslatedAux[i]} ==> ${wordsToLearnAux[i]}</th>
+										<th>${wordsBtoARights[i]}</th>
+										<th>${wordsBtoAFails[i]}</th>
+										<th>${wordsBtoARights[i] + wordsBtoAFails[i]}</th>
+									</tr>
+						`
+						rights += wordsBtoARights[i];
+						fails += wordsBtoAFails[i];
+					}
+			stats +=` <tfoot>
+    				  		<tr>
+								<th>Total</th>
+								<th>${rights}</th>
+								<th>${fails}</th>
+								<th>${rights + fails}</th>
+							</tr>
+    				  </tfoot>
+					</table>
+				</section>`; 
+
+			jQuery("#Stats").empty();
+			jQuery("#Stats").append(stats);
+
+
+		}
+		function correct() {
+			let wordInserted = document.getElementById('wordInserted').value;
+
+			let messageResult = document.getElementById("messageResult");
+			messageResult.classList.remove("alert-success")
+			messageResult.classList.remove("alert-danger")
+			let isCorrect = false; 
+			if(direction == 0){
+				isCorrect = normalize(wordsTranslatedAux[word]).localeCompare(normalize(wordInserted)) == 0;
+				if(isCorrect){
+					wordsAtoBRights[word] += 1;
+				}else{
+					wordsAtoBFails[word] += 1;
+				}
+			}else{
+				isCorrect = normalize(wordsToLearnAux[word]).localeCompare(normalize(wordInserted)) == 0;
+				if(isCorrect){
+					wordsBtoARights[word] += 1;
+				}else{
+					wordsBtoAFails[word] += 1;
+				}
+			}
+			if(isCorrect){
+				messageResult.innerHTML = "That's correct! " + wordsTranslatedAux[word] + " is " + wordsToLearnAux[word];
+				messageResult.classList.add("alert-success")
+			}else{
+				messageResult.innerHTML = "Sorry but " + wordsTranslatedAux[word] + " is " + wordsToLearnAux[word];	
+				messageResult.classList.add("alert-danger")
+			}
+			messageResult.style.display = "block";
+			document.getElementById('wordInserted').value = "";
+			document.getElementById('wordInserted').focus();
+			generateNewWord();
+		}
+		function generateNewWord() {
+
+			generateStats();
+			word = Math.floor(Math.random() * wordsToLearnAux.length);
+
+			direction = Math.floor(Math.random() * 10) % 2 == 0;
+			if (direction == 0) {
+				let wordMessage = document.getElementById('wordMessage').innerHTML = normalize(wordsToLearnAux[word]);
+			}else{
+				let wordMessage = document.getElementById('wordMessage').innerHTML = normalize(wordsTranslatedAux[word]);
+			}
+			
+		}		
+	</script>
+</body>
+</html>
